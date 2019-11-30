@@ -55,6 +55,7 @@ import cn.nekocode.camerafilter.filter.PolygonizationFilter;
 import cn.nekocode.camerafilter.filter.RefractionFilter;
 import cn.nekocode.camerafilter.filter.TileMosaicFilter;
 import cn.nekocode.camerafilter.filter.TrianglesMosaicFilter;
+import cn.nekocode.camerafilter.util.MyGLUtils;
 
 /**
  * @author nekocode (nekocode.cn@gmail.com)
@@ -128,6 +129,20 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
 
         // Start rendering
         renderThread.start();
+    }
+
+    /*
+        자동으로 포커싱 객체를 잡는다
+     */
+    public void focusing() {
+        try {
+            camera.autoFocus(new Camera.AutoFocusCallback() {
+                public void onAutoFocus(boolean success, Camera camera) {
+                }
+            });
+        }catch(RuntimeException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setSelectedFilter(int id) {

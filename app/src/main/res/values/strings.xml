@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">CameraFilter</string>
+    <string name="app_name">Camera</string>
+    <string name="wait">Wait...</string>
+    <string name="skipAlert">Skip</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="original">original</string>
 </resources>

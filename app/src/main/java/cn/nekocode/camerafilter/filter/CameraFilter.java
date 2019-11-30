@@ -24,9 +24,8 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
-import cn.nekocode.camerafilter.MyGLUtils;
+import cn.nekocode.camerafilter.util.MyGLUtils;
 import cn.nekocode.camerafilter.R;
-import cn.nekocode.camerafilter.RenderBuffer;
 
 /**
  * @author nekocode (nekocode.cn@gmail.com)

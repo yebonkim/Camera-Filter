@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.nekocode.camerafilter;
+package cn.nekocode.camerafilter.filter;
 
 import android.opengl.GLES20;
 
@@ -22,6 +22,8 @@ import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
+
+import cn.nekocode.camerafilter.util.MyGLUtils;
 
 /**
  * @author nekocode (nekocode.cn@gmail.com)
