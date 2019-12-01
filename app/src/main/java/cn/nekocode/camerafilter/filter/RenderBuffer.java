@@ -27,6 +27,7 @@ import cn.nekocode.camerafilter.util.MyGLUtils;
 
 /**
  * @author nekocode (nekocode.cn@gmail.com)
+ * texture 지정 시 필요한 화면 Buffer 정의
  */
 public class RenderBuffer {
     private int texId = 0;
@@ -36,6 +37,10 @@ public class RenderBuffer {
 
     private int width, height;
 
+    /*
+        각종 변수 및 Texture Shader 사용 위한 변수들 초기화
+        초기화 후에 Buffer를 생성하여 bind 시킨다.
+     */
     public RenderBuffer(int width, int height, int activeTexUnit) {
         this.width = width;
         this.height = height;
@@ -70,22 +75,30 @@ public class RenderBuffer {
         unbind();
     }
 
+    /*
+        textureId getter
+     */
     public int getTexId() {
         return texId;
     }
 
+    /*
+        width getter
+     */
     public int getWidth() {
         return width;
     }
 
+    /*
+        height getter
+     */
     public int getHeight() {
         return height;
     }
 
-    public int getActiveTexUnit() {
-        return activeTexUnit;
-    }
-
+    /*
+        buffer bind 함수
+     */
     public void bind() {
         GLES20.glViewport(0, 0, width, height);
 
@@ -96,6 +109,9 @@ public class RenderBuffer {
                 GLES20.GL_RENDERBUFFER, renderBufferId);
     }
 
+    /*
+        buffer를 해제시킨다.
+     */
     public void unbind() {
         GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0);
     }

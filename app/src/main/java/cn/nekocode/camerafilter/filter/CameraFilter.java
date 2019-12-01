@@ -27,6 +27,7 @@ import java.nio.FloatBuffer;
 import cn.nekocode.camerafilter.util.MyGLUtils;
 import cn.nekocode.camerafilter.R;
 
+
 /**
  * @author nekocode (nekocode.cn@gmail.com)
  * 모든 필터에 필요한 내용을 정의한 상위 클래스
@@ -51,17 +52,21 @@ public abstract class CameraFilter {
     private static final int BUF_ACTIVE_TEX_UNIT = GLES20.GL_TEXTURE8;
     private static RenderBuffer CAMERA_RENDER_BUF;
 
-    private static final float ROATED_TEXTURE_COORDS[] = {
+    private static final float ROTATED_TEXTURE_COORDS[] = {
             1.0f, 0.0f,
             1.0f, 1.0f,
             0.0f, 0.0f,
             0.0f, 1.0f,
     };
-    private static FloatBuffer ROATED_TEXTURE_COORD_BUF;
+    private static FloatBuffer ROTATED_TEXTURE_COORD_BUF;
 
     final long START_TIME = System.currentTimeMillis();
     int iFrame = 0;
 
+    /*
+        vertex, texture, rotated texture buffer 할당
+        기본 original menu_filter 할당
+     */
     public CameraFilter(Context context) {
         // Setup default Buffers
         if (VERTEX_BUF == null) {
@@ -78,11 +83,11 @@ public abstract class CameraFilter {
             TEXTURE_COORD_BUF.position(0);
         }
 
-        if (ROATED_TEXTURE_COORD_BUF == null) {
-            ROATED_TEXTURE_COORD_BUF = ByteBuffer.allocateDirect(ROATED_TEXTURE_COORDS.length * 4)
+        if (ROTATED_TEXTURE_COORD_BUF == null) {
+            ROTATED_TEXTURE_COORD_BUF = ByteBuffer.allocateDirect(ROTATED_TEXTURE_COORDS.length * 4)
                     .order(ByteOrder.nativeOrder()).asFloatBuffer();
-            ROATED_TEXTURE_COORD_BUF.put(ROATED_TEXTURE_COORDS);
-            ROATED_TEXTURE_COORD_BUF.position(0);
+            ROTATED_TEXTURE_COORD_BUF.put(ROTATED_TEXTURE_COORDS);
+            ROTATED_TEXTURE_COORD_BUF.position(0);
         }
 
         if (PROGRAM == 0) {
@@ -90,13 +95,19 @@ public abstract class CameraFilter {
         }
     }
 
+    /*
+        시작시 iFrame 초기화
+     */
     @CallSuper
     public void onAttach() {
         iFrame = 0;
     }
 
+    /*
+        buffer연결 후 onDraw함수 호출
+        각 실제 필터들은 이 onDraw함수를 구현함으로서 각자 자신의 필터를 표현할 수 있다.
+     */
     final public void draw(int cameraTexId, int canvasWidth, int canvasHeight) {
-        // TODO move?
         // Create camera render buffer
         if (CAMERA_RENDER_BUF == null ||
                 CAMERA_RENDER_BUF.getWidth() != canvasWidth ||
@@ -118,7 +129,7 @@ public abstract class CameraFilter {
 
         int vTexCoordLocation = GLES20.glGetAttribLocation(PROGRAM, "vTexCoord");
         GLES20.glEnableVertexAttribArray(vTexCoordLocation);
-        GLES20.glVertexAttribPointer(vTexCoordLocation, 2, GLES20.GL_FLOAT, false, 4 * 2, ROATED_TEXTURE_COORD_BUF);
+        GLES20.glVertexAttribPointer(vTexCoordLocation, 2, GLES20.GL_FLOAT, false, 4 * 2, ROTATED_TEXTURE_COORD_BUF);
 
         // Render to texture
         CAMERA_RENDER_BUF.bind();
@@ -134,10 +145,16 @@ public abstract class CameraFilter {
 
     abstract void onDraw(int cameraTexId, int canvasWidth, int canvasHeight);
 
+    /*
+        shader에 필요한 변수들 전달 위한 함수
+     */
     void setupShaderInputs(int program, int[] iResolution, int[] iChannels, int[][] iChannelResolutions) {
         setupShaderInputs(program, VERTEX_BUF, TEXTURE_COORD_BUF, iResolution, iChannels, iChannelResolutions);
     }
 
+    /*
+        shader에 필요한 변수들 전달 위한 함수
+     */
     void setupShaderInputs(int program, FloatBuffer vertex, FloatBuffer textureCoord, int[] iResolution, int[] iChannels, int[][] iChannelResolutions) {
         GLES20.glUseProgram(program);
 
@@ -179,6 +196,9 @@ public abstract class CameraFilter {
                 _iChannelResolutions.length, FloatBuffer.wrap(_iChannelResolutions));
     }
 
+    /*
+        buffer와 shader 해제
+     */
     public static void release() {
         PROGRAM = 0;
         CAMERA_RENDER_BUF = null;

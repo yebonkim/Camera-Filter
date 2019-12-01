@@ -78,7 +78,7 @@ public class CameraActivity extends AppCompatActivity implements CameraContract.
     }
 
     /*
-        filter.xml에 지정된 item들을 통해 메뉴 구현
+        menu_filter.xml에 지정된 item들을 통해 메뉴 구현
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
