@@ -5,4 +5,7 @@
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
     <string name="original">original</string>
+    <string name="filter_black_white_default">black white default</string>
+    <string name="filter_black_white_bright">black white bright</string>
+    <string name="filter_black_white_dark">black white dark</string>
 </resources>

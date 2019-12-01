@@ -134,4 +134,24 @@
         android:title="JFAVoronoi"
         app:showAsAction="never"
         />
+
+
+    <item
+        android:id="@+id/black_white_default"
+        android:title="@string/filter_black_white_default"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/black_white_bright"
+        android:title="@string/filter_black_white_bright"
+        app:showAsAction="never"
+        />
+
+
+    <item
+        android:id="@+id/black_white_dark"
+        android:title="@string/filter_black_white_dark"
+        app:showAsAction="never"
+        />
 </menu>

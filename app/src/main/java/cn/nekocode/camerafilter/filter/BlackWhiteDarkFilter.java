@@ -18,22 +18,25 @@ package cn.nekocode.camerafilter.filter;
 import android.content.Context;
 import android.opengl.GLES20;
 
-import cn.nekocode.camerafilter.util.MyGLUtils;
 import cn.nekocode.camerafilter.R;
+import cn.nekocode.camerafilter.util.MyGLUtils;
+
 
 /**
  * @author nekocode (nekocode.cn@gmail.com)
- * 어떠한 필터도 적용하지 않은 기본 필터
- * shader 파일에서도 받은 내용을 그대로 내보낸다.
+ * 어두운 흑백 필터
+ * 쉐이더 안에서 rgb값과 적절한 상수들의 내적을 통해 구현한다.
+ * vec의 xyz값이 곧 rgb값이다.
+ * 이 결과에 어두운 brightness를 곱해준다.
  */
-public class OriginalFilter extends CameraFilter {
+public class BlackWhiteDarkFilter extends CameraFilter {
     private int program;
 
-    public OriginalFilter(Context context) {
+    public BlackWhiteDarkFilter(Context context) {
         super(context);
 
         // Build shaders
-        program = MyGLUtils.buildProgram(context, R.raw.vertext, R.raw.original);
+        program = MyGLUtils.buildProgram(context, R.raw.vertext, R.raw.black_white_dark);
     }
 
     @Override

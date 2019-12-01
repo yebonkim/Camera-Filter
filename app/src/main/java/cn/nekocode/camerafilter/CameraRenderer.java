@@ -35,6 +35,9 @@ import javax.microedition.khronos.egl.EGLSurface;
 
 import cn.nekocode.camerafilter.filter.AsciiArtFilter;
 import cn.nekocode.camerafilter.filter.BasicDeformFilter;
+import cn.nekocode.camerafilter.filter.BlackWhiteBrightFilter;
+import cn.nekocode.camerafilter.filter.BlackWhiteDarkFilter;
+import cn.nekocode.camerafilter.filter.BlackWhiteFilter;
 import cn.nekocode.camerafilter.filter.BlueorangeFilter;
 import cn.nekocode.camerafilter.filter.CameraFilter;
 import cn.nekocode.camerafilter.filter.ChromaticAberrationFilter;
@@ -178,6 +181,9 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
         cameraFilterMap.append(R.id.filter18, new CrackedFilter(context));
         cameraFilterMap.append(R.id.filter19, new PolygonizationFilter(context));
         cameraFilterMap.append(R.id.filter20, new JFAVoronoiFilter(context));
+        cameraFilterMap.append(R.id.black_white_default, new BlackWhiteFilter(context));
+        cameraFilterMap.append(R.id.black_white_bright, new BlackWhiteBrightFilter(context));
+        cameraFilterMap.append(R.id.black_white_dark, new BlackWhiteDarkFilter(context));
         setSelectedFilter(selectedFilterId);
 
         // Create texture for camera preview

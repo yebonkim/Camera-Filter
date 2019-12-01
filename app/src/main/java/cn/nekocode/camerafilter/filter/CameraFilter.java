@@ -29,6 +29,8 @@ import cn.nekocode.camerafilter.R;
 
 /**
  * @author nekocode (nekocode.cn@gmail.com)
+ * 모든 필터에 필요한 내용을 정의한 상위 클래스
+ * Shader에 전달할 변수 또한 설정
  */
 public abstract class CameraFilter {
     static final float SQUARE_COORDS[] = {
