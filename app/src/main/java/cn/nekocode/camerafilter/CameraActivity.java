@@ -82,7 +82,7 @@ public class CameraActivity extends AppCompatActivity implements CameraContract.
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.filter, menu);
+        getMenuInflater().inflate(R.menu.menu_filter, menu);
         return true;
     }
 

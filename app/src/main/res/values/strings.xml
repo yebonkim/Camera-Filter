@@ -4,8 +4,30 @@
     <string name="skipAlert">Skip</string>
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
-    <string name="original">original</string>
-    <string name="filter_black_white_default">black white default</string>
-    <string name="filter_black_white_bright">black white bright</string>
-    <string name="filter_black_white_dark">black white dark</string>
+
+    <!-- filters -->
+    <string name="filter_original">Original</string>
+    <string name="filter_black_white_default">Black White Default</string>
+    <string name="filter_black_white_bright">Black White Bright</string>
+    <string name="filter_black_white_dark">Black White Dark</string>
+    <string name="filter_blue_orange">Blue Orange</string>
+    <string name="filter_edge_detection">Edge Detection</string>
+    <string name="filter_pixelize">Pixelize</string>
+    <string name="filter_em_interference">EM Interference</string>
+    <string name="filter_triangles_mosaic">Triangles Mosaic</string>
+    <string name="filter_legofied">Legofied</string>
+    <string name="filter_tile_mosaic">Tile Mosaic</string>
+    <string name="filter_chromatic_aberration">Chromatic Aberration</string>
+    <string name="filter_basic_deform">Basic Deform</string>
+    <string name="filter_contrast">Contrast</string>
+    <string name="filter_noise_warp">Noise Warp</string>
+    <string name="filter_refraction">Refraction</string>
+    <string name="filter_mapping">Mapping</string>
+    <string name="filter_crosshatch">Crosshatch</string>
+    <string name="filter_lichtenstein_esque">Lichtenstein Esque</string>
+    <string name="filter_ascii_art">Ascii Art</string>
+    <string name="filter_money_filter">Money Filter</string>
+    <string name="filter_cracked">Cracked</string>
+    <string name="filter_polygonization">Polygonization</string>
+    <string name="filter_jfa_voronoi">JFA Voronoi</string>
 </resources>

@@ -83,7 +83,7 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
     private SurfaceTexture cameraSurfaceTexture;
     private int cameraTextureId;
     private CameraFilter selectedFilter;
-    private int selectedFilterId = R.id.filter0;
+    private int selectedFilterId = R.id.filter_original;
     private SparseArray<CameraFilter> cameraFilterMap = new SparseArray<>();
 
     public CameraRenderer(Context context) {
@@ -160,30 +160,30 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
         initGL(surfaceTexture);
 
         // Setup camera filters map
-        cameraFilterMap.append(R.id.filter0, new OriginalFilter(context));
-        cameraFilterMap.append(R.id.filter1, new EdgeDetectionFilter(context));
-        cameraFilterMap.append(R.id.filter2, new PixelizeFilter(context));
-        cameraFilterMap.append(R.id.filter3, new EMInterferenceFilter(context));
-        cameraFilterMap.append(R.id.filter4, new TrianglesMosaicFilter(context));
-        cameraFilterMap.append(R.id.filter5, new LegofiedFilter(context));
-        cameraFilterMap.append(R.id.filter6, new TileMosaicFilter(context));
-        cameraFilterMap.append(R.id.filter7, new BlueorangeFilter(context));
-        cameraFilterMap.append(R.id.filter8, new ChromaticAberrationFilter(context));
-        cameraFilterMap.append(R.id.filter9, new BasicDeformFilter(context));
-        cameraFilterMap.append(R.id.filter10, new ContrastFilter(context));
-        cameraFilterMap.append(R.id.filter11, new NoiseWarpFilter(context));
-        cameraFilterMap.append(R.id.filter12, new RefractionFilter(context));
-        cameraFilterMap.append(R.id.filter13, new MappingFilter(context));
-        cameraFilterMap.append(R.id.filter14, new CrosshatchFilter(context));
-        cameraFilterMap.append(R.id.filter15, new LichtensteinEsqueFilter(context));
-        cameraFilterMap.append(R.id.filter16, new AsciiArtFilter(context));
-        cameraFilterMap.append(R.id.filter17, new MoneyFilter(context));
-        cameraFilterMap.append(R.id.filter18, new CrackedFilter(context));
-        cameraFilterMap.append(R.id.filter19, new PolygonizationFilter(context));
-        cameraFilterMap.append(R.id.filter20, new JFAVoronoiFilter(context));
+        cameraFilterMap.append(R.id.filter_original, new OriginalFilter(context));
         cameraFilterMap.append(R.id.black_white_default, new BlackWhiteFilter(context));
         cameraFilterMap.append(R.id.black_white_bright, new BlackWhiteBrightFilter(context));
         cameraFilterMap.append(R.id.black_white_dark, new BlackWhiteDarkFilter(context));
+        cameraFilterMap.append(R.id.filter_blue_orange, new BlueorangeFilter(context));
+        cameraFilterMap.append(R.id.filter_edge_detection, new EdgeDetectionFilter(context));
+        cameraFilterMap.append(R.id.filter_pixelize, new PixelizeFilter(context));
+        cameraFilterMap.append(R.id.filter_em_interference, new EMInterferenceFilter(context));
+        cameraFilterMap.append(R.id.filter_triangles_mosaic, new TrianglesMosaicFilter(context));
+        cameraFilterMap.append(R.id.filter_legofied, new LegofiedFilter(context));
+        cameraFilterMap.append(R.id.filter_tile_mosaic, new TileMosaicFilter(context));
+        cameraFilterMap.append(R.id.filter_chromatic_aberration, new ChromaticAberrationFilter(context));
+        cameraFilterMap.append(R.id.filter_basic_deform, new BasicDeformFilter(context));
+        cameraFilterMap.append(R.id.filter_contrast, new ContrastFilter(context));
+        cameraFilterMap.append(R.id.filter_noise_warp, new NoiseWarpFilter(context));
+        cameraFilterMap.append(R.id.filter_refraction, new RefractionFilter(context));
+        cameraFilterMap.append(R.id.filter_mapping, new MappingFilter(context));
+        cameraFilterMap.append(R.id.filter_crosshatch, new CrosshatchFilter(context));
+        cameraFilterMap.append(R.id.filter_lichtenstein_esque, new LichtensteinEsqueFilter(context));
+        cameraFilterMap.append(R.id.filter_ascii_art, new AsciiArtFilter(context));
+        cameraFilterMap.append(R.id.filter_money_filter, new MoneyFilter(context));
+        cameraFilterMap.append(R.id.filter_cracked, new CrackedFilter(context));
+        cameraFilterMap.append(R.id.filter_polygonization, new PolygonizationFilter(context));
+        cameraFilterMap.append(R.id.filter_jfa_voronoi, new JFAVoronoiFilter(context));
         setSelectedFilter(selectedFilterId);
 
         // Create texture for camera preview

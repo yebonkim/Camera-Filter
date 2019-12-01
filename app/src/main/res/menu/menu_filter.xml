@@ -1,0 +1,125 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/filter_original"
+        android:title="@string/filter_original"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/black_white_default"
+        android:title="@string/filter_black_white_default"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/black_white_bright"
+        android:title="@string/filter_black_white_bright"
+        app:showAsAction="never" />
+
+
+    <item
+        android:id="@+id/black_white_dark"
+        android:title="@string/filter_black_white_dark"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/filter_blue_orange"
+        android:title="@string/filter_blue_orange"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/filter_edge_detection"
+        android:title="@string/filter_edge_detection"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/filter_pixelize"
+        android:title="@string/filter_pixelize"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/filter_em_interference"
+        android:title="@string/filter_em_interference"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/filter_triangles_mosaic"
+        android:title="@string/filter_triangles_mosaic"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/filter_legofied"
+        android:title="@string/filter_legofied"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/filter_tile_mosaic"
+        android:title="@string/filter_tile_mosaic"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/filter_chromatic_aberration"
+        android:title="@string/filter_chromatic_aberration"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/filter_basic_deform"
+        android:title="@string/filter_basic_deform"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/filter_contrast"
+        android:title="@string/filter_contrast"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/filter_noise_warp"
+        android:title="@string/filter_noise_warp"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/filter_refraction"
+        android:title="@string/filter_refraction"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/filter_mapping"
+        android:title="@string/filter_mapping"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/filter_crosshatch"
+        android:title="@string/filter_crosshatch"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/filter_lichtenstein_esque"
+        android:title="@string/filter_lichtenstein_esque"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/filter_ascii_art"
+        android:title="@string/filter_ascii_art"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/filter_money_filter"
+        android:title="@string/filter_money_filter"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/filter_cracked"
+        android:title="@string/filter_cracked"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/filter_polygonization"
+        android:title="@string/filter_polygonization"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/filter_jfa_voronoi"
+        android:title="@string/filter_jfa_voronoi"
+        app:showAsAction="never" />
+
+</menu>
