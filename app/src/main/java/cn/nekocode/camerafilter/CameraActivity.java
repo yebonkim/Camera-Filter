@@ -1,17 +1,30 @@
 package cn.nekocode.camerafilter;
 
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.TextureView;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class CameraActivity extends AppCompatActivity implements CameraContract.View {
+    private final static String[] PERMISSION_LIST = {
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
+    };
 
     @BindView(R.id.cameraView)
     TextureView cameraView;
@@ -25,9 +38,12 @@ public class CameraActivity extends AppCompatActivity implements CameraContract.
         setContentView(R.layout.activity_camera);
         ButterKnife.bind(this);
 
-        presenter = new CameraPresenter();
-        presenter.setView(this, this);
-        presenter.getPermission();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            checkAndRequestPermission();
+        }
+
+        presenter = new CameraPresenter(getBaseContext());
+        presenter.setView(this);
         presenter.setCameraView();
     }
 
@@ -77,9 +93,16 @@ public class CameraActivity extends AppCompatActivity implements CameraContract.
         progressDialog.dismiss();
     }
 
+    @Override
+    public void refreshGallery(File file) {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        mediaScanIntent.setData(Uri.fromFile(file));
+        sendBroadcast(mediaScanIntent);
+    }
+
     /*
-        menu_filter.xml에 지정된 item들을 통해 메뉴 구현
-     */
+            menu_filter.xml에 지정된 item들을 통해 메뉴 구현
+         */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_filter, menu);
@@ -96,5 +119,20 @@ public class CameraActivity extends AppCompatActivity implements CameraContract.
         presenter.setFilter(filterId);
 
         return true;
+    }
+
+    /*
+        허용되지 않은 권한을 사용자에게 요청
+     */
+    private void checkAndRequestPermission() {
+        int result;
+
+        for (int i = 0; i < PERMISSION_LIST.length; i++) {
+            result = ContextCompat.checkSelfPermission(this, PERMISSION_LIST[i]);
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, PERMISSION_LIST, 1);
+                break;
+            }
+        }
     }
 }

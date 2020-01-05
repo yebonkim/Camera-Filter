@@ -1,16 +1,8 @@
 package cn.nekocode.camerafilter;
 
-
-import android.Manifest;
-import android.app.Activity;
-import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.content.Context;
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -25,37 +17,21 @@ import java.util.Calendar;
  */
 
 public class CameraPresenter implements CameraContract.Presenter {
-    private static final String TAG = "CameraActivity";
-
     private CameraContract.View view;
     private static final String FOLDER_NAME = "/filter_camera";
 
-    private static String[] PERMISSION_LIST = {
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.CAMERA
-    };
-
-    Activity activity;
     CameraRenderer renderer;
+
+    public CameraPresenter(Context context) {
+        this.renderer = new CameraRenderer(context);
+    }
 
     /*
         CameraActivity와 CameraPresenter와 CameraRenderer를 서로 연결
      */
     @Override
-    public void setView(Activity activity, CameraContract.View view) {
-        this.activity = activity;
+    public void setView(CameraContract.View view) {
         this.view = view;
-        this.renderer = new CameraRenderer(activity);
-    }
-
-    /*
-        핸드폰의 sdk 버전이 M(marshmallow) 이상일 경우에만 권한 요청
-     */
-    @Override
-    public void getPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            checkAndRequestPermission();
-        }
     }
 
     /*
@@ -118,7 +94,7 @@ public class CameraPresenter implements CameraContract.Presenter {
             outStream.write(imgData);
             outStream.flush();
             outStream.close();
-            refreshGallery(outFile);
+            view.refreshGallery(outFile);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -139,29 +115,5 @@ public class CameraPresenter implements CameraContract.Presenter {
         String today = new SimpleDateFormat(pattern).format(date);
 
         return today+ext;
-    }
-
-    /*
-        핸드폰이 새 사진을 찾기 위한 함수
-     */
-    protected void refreshGallery(File file) {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        mediaScanIntent.setData(Uri.fromFile(file));
-        activity.sendBroadcast(mediaScanIntent);
-    }
-
-    /*
-        허용되지 않은 권한을 사용자에게 요청
-     */
-    protected void checkAndRequestPermission() {
-        int result;
-
-        for (int i = 0; i < PERMISSION_LIST.length; i++) {
-            result = ContextCompat.checkSelfPermission(activity, PERMISSION_LIST[i]);
-            if (result != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(activity, PERMISSION_LIST, 1);
-                break;
-            }
-        }
     }
 }
