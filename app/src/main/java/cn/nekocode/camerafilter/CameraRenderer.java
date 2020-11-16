@@ -73,6 +73,7 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
     private Context context;
     private SurfaceTexture surfaceTexture;
     private int gwidth, gheight;
+    private int mCameraFacing = Camera.CameraInfo.CAMERA_FACING_BACK;
 
     private EGLDisplay eglDisplay;
     private EGLSurface eglSurface;
@@ -126,8 +127,8 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
         gheight = -height;
 
         // Open camera
-        Pair<Camera.CameraInfo, Integer> backCamera = getBackCamera();
-        final int backCameraId = backCamera.second;
+        Pair<Camera.CameraInfo, Integer> cameraInfo = getCamera(mCameraFacing);
+        final int backCameraId = cameraInfo.second;
         camera = Camera.open(backCameraId);
 
         // Start rendering
@@ -146,6 +147,10 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
         }catch(RuntimeException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setCameraFacing(int cameraFacing) {
+        mCameraFacing = cameraFacing;
     }
 
     public void setSelectedFilter(int id) {
@@ -212,7 +217,8 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
                 }
 
                 // Draw camera preview
-                selectedFilter.draw(cameraTextureId, gwidth, gheight);
+                boolean isFacingFront = mCameraFacing == Camera.CameraInfo.CAMERA_FACING_FRONT;
+                selectedFilter.draw(cameraTextureId, gwidth, gheight, isFacingFront);
 
                 // Flush
                 GLES20.glFlush();
@@ -289,13 +295,13 @@ public class CameraRenderer implements Runnable, TextureView.SurfaceTextureListe
         }
     }
 
-    private Pair<Camera.CameraInfo, Integer> getBackCamera() {
+    private Pair<Camera.CameraInfo, Integer> getCamera(int facing) {
         Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
         final int numberOfCameras = Camera.getNumberOfCameras();
 
         for (int i = 0; i < numberOfCameras; ++i) {
             Camera.getCameraInfo(i, cameraInfo);
-            if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_BACK) {
+            if (cameraInfo.facing == facing) {
                 return new Pair<>(cameraInfo, i);
             }
         }

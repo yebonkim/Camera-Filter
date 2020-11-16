@@ -52,13 +52,20 @@ public abstract class CameraFilter {
     private static final int BUF_ACTIVE_TEX_UNIT = GLES20.GL_TEXTURE8;
     private static RenderBuffer CAMERA_RENDER_BUF;
 
-    private static final float ROTATED_TEXTURE_COORDS[] = {
+    private static final float BACK_CAMERA_ROTATED_TEXTURE_COORDS[] = {
             1.0f, 0.0f,
             1.0f, 1.0f,
             0.0f, 0.0f,
             0.0f, 1.0f,
     };
-    private static FloatBuffer ROTATED_TEXTURE_COORD_BUF;
+    private static final float FRONT_CAMERA_ROTATED_TEXTURE_COORDS[] = {
+            0.0f, 0.0f,
+            0.0f, 1.0f,
+            1.0f, 0.0f,
+            1.0f, 1.0f,
+    };
+    private static FloatBuffer FRONT_CAMERA_ROTATED_TEXTURE_COORD_BUF;
+    private static FloatBuffer BACK_CAMERA_ROTATED_TEXTURE_COORD_BUF;
 
     final long START_TIME = System.currentTimeMillis();
     int iFrame = 0;
@@ -83,11 +90,17 @@ public abstract class CameraFilter {
             TEXTURE_COORD_BUF.position(0);
         }
 
-        if (ROTATED_TEXTURE_COORD_BUF == null) {
-            ROTATED_TEXTURE_COORD_BUF = ByteBuffer.allocateDirect(ROTATED_TEXTURE_COORDS.length * 4)
+        if (FRONT_CAMERA_ROTATED_TEXTURE_COORD_BUF == null) {
+            FRONT_CAMERA_ROTATED_TEXTURE_COORD_BUF = ByteBuffer.allocateDirect(FRONT_CAMERA_ROTATED_TEXTURE_COORDS.length * 4)
                     .order(ByteOrder.nativeOrder()).asFloatBuffer();
-            ROTATED_TEXTURE_COORD_BUF.put(ROTATED_TEXTURE_COORDS);
-            ROTATED_TEXTURE_COORD_BUF.position(0);
+            FRONT_CAMERA_ROTATED_TEXTURE_COORD_BUF.put(FRONT_CAMERA_ROTATED_TEXTURE_COORDS);
+            FRONT_CAMERA_ROTATED_TEXTURE_COORD_BUF.position(0);
+        }
+        if (BACK_CAMERA_ROTATED_TEXTURE_COORD_BUF == null) {
+            BACK_CAMERA_ROTATED_TEXTURE_COORD_BUF = ByteBuffer.allocateDirect(BACK_CAMERA_ROTATED_TEXTURE_COORDS.length * 4)
+                    .order(ByteOrder.nativeOrder()).asFloatBuffer();
+            BACK_CAMERA_ROTATED_TEXTURE_COORD_BUF.put(BACK_CAMERA_ROTATED_TEXTURE_COORDS);
+            BACK_CAMERA_ROTATED_TEXTURE_COORD_BUF.position(0);
         }
 
         if (PROGRAM == 0) {
@@ -107,7 +120,7 @@ public abstract class CameraFilter {
         buffer연결 후 onDraw함수 호출
         각 실제 필터들은 이 onDraw함수를 구현함으로서 각자 자신의 필터를 표현할 수 있다.
      */
-    final public void draw(int cameraTexId, int canvasWidth, int canvasHeight) {
+    final public void draw(int cameraTexId, int canvasWidth, int canvasHeight, boolean isFacingFront) {
         // Create camera render buffer
         if (CAMERA_RENDER_BUF == null ||
                 CAMERA_RENDER_BUF.getWidth() != canvasWidth ||
@@ -129,7 +142,11 @@ public abstract class CameraFilter {
 
         int vTexCoordLocation = GLES20.glGetAttribLocation(PROGRAM, "vTexCoord");
         GLES20.glEnableVertexAttribArray(vTexCoordLocation);
-        GLES20.glVertexAttribPointer(vTexCoordLocation, 2, GLES20.GL_FLOAT, false, 4 * 2, ROTATED_TEXTURE_COORD_BUF);
+        if (isFacingFront) {
+            GLES20.glVertexAttribPointer(vTexCoordLocation, 2, GLES20.GL_FLOAT, false, 4 * 2, FRONT_CAMERA_ROTATED_TEXTURE_COORD_BUF);
+        } else {
+            GLES20.glVertexAttribPointer(vTexCoordLocation, 2, GLES20.GL_FLOAT, false, 4 * 2, BACK_CAMERA_ROTATED_TEXTURE_COORD_BUF);
+        }
 
         // Render to texture
         CAMERA_RENDER_BUF.bind();
